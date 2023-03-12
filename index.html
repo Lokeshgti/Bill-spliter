@@ -1,26 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+	<title>Simple Game</title>
+	<style>
+		body {
+			background-color: #f7f7f7;
+			color: #333;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+			text-align: center;
+		}
+
+		h1 {
+			font-size: 32px;
+			font-weight: bold;
+			margin-top: 50px;
+			text-transform: uppercase;
+		}
+
+		p {
+			margin: 20px 0;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.box {
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			display: inline-block;
+			margin: 50px;
+			padding: 20px;
+			transition: background-color 0.3s ease;
+		}
+
+		.box:hover {
+			background-color: #f2f2f2;
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bill Splitting Application</h1>
-        <p>This is a simple javascript currency converter application. Enter the value in USD to get it into INR.</p>
-        <input type="text" id="amount" placeholder="Enter Amount">
-        <input type="text" id="persons" placeholder="Enter Persons">
+	<h1>Simple Game</h1>
+	<p>Click the box as many times as you can in 10 seconds.</p>
+	<div class="box"></div>
+	<p id="score">Score: 0</p>
+	<p id="time">Time remaining: 10 seconds</p>
 
-        <button class="btn" onclick="splitBill()">Split The Bill</button>
-        <h2 id="bill"></h2>
-    </div>
+	<script>
+		let score = 0;
+		let timeLeft = 10;
+		let gameInterval = setInterval(updateTime, 1000);
 
-    <script>
-        console.log('codekaro')
-    </script>
-    <script src="./app.js"></script>
+		document.querySelector(".box").addEventListener("click", updateScore);
+
+		function updateScore() {
+			score++;
+			document.querySelector("#score").innerHTML = "Score: " + score;
+		}
+
+		function updateTime() {
+			timeLeft--;
+			document.querySelector("#time").innerHTML = "Time remaining: " + timeLeft + " seconds";
+			if (timeLeft === 0) {
+				clearInterval(gameInterval);
+				document.querySelector(".box").removeEventListener("click", updateScore);
+				document.querySelector(".box").style.backgroundColor = "#ccc";
+				document.querySelector(".box").style.cursor = "default";
+				document.querySelector("#time").innerHTML = "Game over!";
+			}
+		}
+	</script>
 </body>
 </html>
